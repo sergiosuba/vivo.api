@@ -22,6 +22,7 @@ public class ServicesRepositoryTest {
 	@Test
 	public void testSave() {
 		Service s = new Service();
+		
 		s.setPlanId(1L);
 		s.setServiceName("sms");
 		s.setValue(1L);
@@ -30,6 +31,5 @@ public class ServicesRepositoryTest {
 		Service response = repository.save(s);
 		
 		assertNotNull(response);
-	
 	}
 }

@@ -51,9 +51,11 @@ public class CustomerRepositoryTest {
 		
 		assertNotNull(response);
 	}
-	
+	@Test
 	public void testFindByEmail() {
 		Optional<Customer> response = repository.findByEmailEquals(EMAIL);
+		
+		assertNotNull(response);
 	}
 	
 }
