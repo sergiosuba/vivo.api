@@ -1,5 +1,6 @@
 package com.vivo.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Test;
@@ -15,6 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.JsonPathResultMatchers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,6 +30,7 @@ import com.vivo.service.CustomerService;
 @ActiveProfiles("test")
 public class CustomerControllerTest {
 
+	private static final Long ID = 1L;
 	private static final String EMAIL = "email@mail.com";
 	private static final String NAME = "Test Name";
 	private static final String PASSWORD = "123456";
@@ -43,14 +46,31 @@ public class CustomerControllerTest {
 	public void testSave() throws Exception {
 		
 		BDDMockito.given(service.save(Mockito.any(Customer.class))).willReturn(getMockCustomer());
-		mvc.perform(MockMvcRequestBuilders.post(URL).content(getJsonPayload())
+		mvc.perform(MockMvcRequestBuilders.post(URL).content(getJsonPayload(ID, EMAIL, NAME, PASSWORD))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
-		.andExpect(status().isCreated());
+		.andExpect(status().isCreated())
+		.andExpect(jsonPath("$.data.id").value(ID))
+		.andExpect(jsonPath("$.data.email").value(EMAIL))
+		.andExpect(jsonPath("$.data.name").value(NAME))
+		.andExpect(jsonPath("$.data.password").value(PASSWORD));
+	}
+	
+	@Test
+	public void testSaveInvalidEmail() throws Exception {
+		
+		BDDMockito.given(service.save(Mockito.any(Customer.class))).willReturn(getMockCustomer());
+		mvc.perform(MockMvcRequestBuilders.post(URL).content(getJsonPayload(ID, "email", NAME, PASSWORD))
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON))
+		.andExpect(status().isBadRequest())
+		.andExpect(jsonPath("$.errors[0]").value("E-mail inválido"));
+		
 	}
 	
 	public Customer getMockCustomer() {
 		Customer c = new Customer();
+		c.setId(ID);
 		c.setEmail(EMAIL);
 		c.setName(NAME);
 		c.setPassword(PASSWORD);
@@ -58,12 +78,13 @@ public class CustomerControllerTest {
 		return c;
 	}
 	
-	public String getJsonPayload() throws JsonProcessingException {
+	public String getJsonPayload(Long id, String email, String name, String password) throws JsonProcessingException {
 		
 		CustomerDTO dto = new CustomerDTO();
-		dto.setEmail(EMAIL);
-		dto.setName(NAME);
-		dto.setPassword(PASSWORD);
+		dto.setId(id);
+		dto.setEmail(email);
+		dto.setName(name);
+		dto.setPassword(password);
 		
 		ObjectMapper mapper = new ObjectMapper();
 		

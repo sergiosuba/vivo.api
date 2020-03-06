@@ -28,6 +28,10 @@ public class CustomerController {
 		
 		Response<CustomerDTO> response = new Response<CustomerDTO>();
 		
+		if(result.hasErrors()) {
+			result.getAllErrors().forEach(e -> response.getErrors().add(e.getDefaultMessage()));
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+		}
 		Customer customer = service.save(this.convertDtoToEntity(dto));
 		
 		response.setData(this.convertEntityToDto(customer));
@@ -37,6 +41,7 @@ public class CustomerController {
 	
 	private Customer convertDtoToEntity(CustomerDTO dto) {
 		Customer c = new Customer();
+		c.setId(dto.getId());
 		c.setName(dto.getName());
 		c.setEmail(dto.getEmail());
 		c.setPassword(dto.getPassword());
@@ -46,6 +51,7 @@ public class CustomerController {
 	
 	private CustomerDTO convertEntityToDto(Customer c) {
 		CustomerDTO dto = new CustomerDTO();
+		dto.setId(c.getId());
 		dto.setName(c.getName());
 		dto.setEmail(c.getEmail());
 		dto.setPassword(c.getPassword());
