@@ -3,10 +3,6 @@
 
 # Vivo API
 
-# Docker
-
-[![Build Status](https://travis-ci.org/sergiosuba/vivoAPI.svg?branch=master)](https://travis-ci.org/sergiosuba/vivoAPI)
-
 Projeto criado para aprensetart algumas modelos e boas práticas de desenvolvimento de *API RESTfull com Spring Boot utilizando TDD, CI e CD*, a principal funcionalidade dessa API é permitir o cadastro de usuários para manipular de maneira individual uma conta, inserindo, alterando, removendo ou adicionado itens consumidos como Dados, SMS e Minutos de ligação. A ideia está simples, lembrando que o objetivo é apresentar o modelo de desenvolvimento.
 
 ## Detalhes do projeto
