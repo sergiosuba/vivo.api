@@ -1,8 +1,13 @@
-[![Build Status](https://travis-ci.org/vitoralves/walletAPI.svg?branch=master)](https://travis-ci.org/vitoralves/walletAPI)
+[![Build Status](https://travis-ci.org/sergiosuba/vivoAPI.svg?branch=master)](https://travis-ci.org/sergiosuba/vivoAPI)
 
-# Wallet API
 
-Projeto criado para servir de referência ao curso *API RESTfull com Spring Boot utilizando TDD, CI e CD* que está divulgado na plataforma Udemy, a principal funcionalidade dessa API é permitir o cadastro de usuários para manipular de maneira individual uma carteira, inserindo, alterando, removendo ou adicionado itens.
+# Vivo API
+
+# Docker
+
+[![Build Status](https://travis-ci.org/sergiosuba/vivoAPI.svg?branch=master)](https://travis-ci.org/sergiosuba/vivoAPI)
+
+Projeto criado para aprensetart algumas modelos e boas práticas de desenvolvimento de *API RESTfull com Spring Boot utilizando TDD, CI e CD*, a principal funcionalidade dessa API é permitir o cadastro de usuários para manipular de maneira individual uma conta, inserindo, alterando, removendo ou adicionado itens consumidos como Dados, SMS e Minutos de ligação. A ideia está simples, lembrando que o objetivo é apresentar o modelo de desenvolvimento.
 
 ## Detalhes do projeto
 *Esse projeto possui as seguintes características:*
@@ -19,10 +24,10 @@ Projeto criado para servir de referência ao curso *API RESTfull com Spring Boot
 * Segurança da API com autenticação via tokens JWT 
 
 ## Como executar a aplicação
-Certifique-se de ter o Maven instalado e adicionado ao PATH de seu sistema operacional, assim como o Git, crie um banco de dados no postgres e altere o arquivo application.properties informando as credenciais para a aplicação acessar a base de dados, não se preocupe com a criação das tabelas, o flyway se encarregará dessa função.
+Certifique-se de ter o Maven instalado e adicionado ao PATH de seu sistema operacional, assim como o Git, crie um banco de dados no postgres e altere o arquivo application.properties informando as credenciais para a aplicação acessar a base de dados, não se preocupe com a criação das tabelas, o flyway se encarregará dessa função, deve ser criado apenas o banco de dados com o nome vivo.
 ```
-git clone https://github.com/vitoralves/walletAPI
-cd walletAPI
+git clone https://github.com/sergiosuba/vivo.api
+cd vivo.api
 mvn spring-boot:run
 Acesse os endpoints através da url http://localhost:8080
 ```
@@ -37,16 +42,17 @@ O pacote será gerado dentro da pasta target, basta executá-lo com o comando ab
 Também é necessário criar uma variável de ambiente com as credenciais de acesso ao banco de dados com o nome $DATABASE_URL ou alterar o arquivo application-prod.properties.
 
 ```
-java -jar -Dspring.profiles.active=prod -Dserver.port=443 walletAPI-0.0.1-SNAPSHOT.jar
+java -jar -Dspring.profiles.active=prod -Dserver.port=443 vivo.api-0.0.1-SNAPSHOT.jar
 ```
 ## Como autenticar na API
 Antes de fazer requisições nos endpoint você deve estar autenticado, antes crie um usuário através de uma requisição POST na rota */user* como no exemplo abaixo:
 
 ```
 {
-	"name": "Heroku User",
-	"email": "user@heroku.com",
-	"password": "123456"
+	"name": "Vivo User",
+	"email": "user@vivo.com",
+	"password": "123456",
+	"role": "ROLE_ADMIN"
 }
 ```
 
@@ -54,7 +60,7 @@ Agora você pode autenticar na API e obter um token de acesso através do endpoi
 
 ```
 {
-	"email": "user@heroku.com",
+	"email": "user@vivo.com",
 	"password":"123456"
 }
 ```
@@ -69,4 +75,4 @@ mvn test
 ### Documentação
 Utilize a interface do Swagger para ter acesso a documentação dos endpoints, ela está disponível na url http://localhost:8080/swagger-ui.html
 ### Heroku
-A aplicação está disponível no heroku através da url https://apiwallet.herokuapp.com/
+A aplicação está disponível no heroku através da url https://vivoapi.herokuapp.com/

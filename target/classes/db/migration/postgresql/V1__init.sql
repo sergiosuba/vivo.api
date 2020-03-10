@@ -10,6 +10,7 @@ create table account(
 id serial,
 name varchar(60),
 value numeric(10,2),
+lineNumber numeric(11),
 primary key (id));
 
 create table users_account(
