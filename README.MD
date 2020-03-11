@@ -72,3 +72,6 @@ mvn test
 Utilize a interface do Swagger para ter acesso a documentação dos endpoints, ela está disponível na url http://localhost:8080/swagger-ui.html
 ### Heroku
 A aplicação está disponível no heroku através da url https://vivoapi.herokuapp.com/
+
+### Docker
+A aplicação está disponível no repositório através da url https://hub.docker.com/repository/docker/sergiosuba/vivoapi
